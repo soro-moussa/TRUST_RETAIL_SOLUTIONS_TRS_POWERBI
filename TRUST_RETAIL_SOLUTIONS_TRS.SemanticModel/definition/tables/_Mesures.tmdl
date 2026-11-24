@@ -1,0 +1,73 @@
+table _Mesures
+	lineageTag: e0b5408f-c054-4ec3-9bec-ea80fff9752f
+
+	measure 'CA Total' = SUM(ventes_TRS_2026[Montant en $])
+		formatString: \$#,0.00;(\$#,0.00);\$#,0.00
+		lineageTag: b8dc2f60-5698-4338-9579-6320ca6eaa02
+
+		annotation PBI_FormatHint = {"currencyCulture":"en-US"}
+
+	measure 'Nombre Transactions' = COUNT(ventes_TRS_2026[ID Transaction])
+		formatString: 0
+		lineageTag: e65bdef7-32d3-4647-bc7b-6eec7c79063b
+
+	measure 'Nombre Clients' = DISTINCTCOUNT(ventes_TRS_2026[Client])
+		formatString: 0
+		lineageTag: 7c6d59d6-04bf-47c2-b293-3ac8cb049fa0
+
+	measure 'Panier Moyen' = DIVIDE([CA Total],[Nombre Transactions])
+		formatString: \$#,0.00;(\$#,0.00);\$#,0.00
+		lineageTag: 023ea64b-55f2-4a48-bcc9-a5b5c05dd9f6
+
+		annotation PBI_FormatHint = {"currencyCulture":"en-US"}
+
+	measure 'Part Chiffre D''affaire pays' = DIVIDE([CA Total], CALCULATE([CA Total], ALL(ventes_TRS_2026[Pays])))
+		formatString: 0\ %;-0\ %;0\ %
+		lineageTag: e4d84293-d137-4f76-9fed-38feb8fa0aa0
+
+	measure 'Part Chiffre D''affaire Canal' = DIVIDE([CA Total], CALCULATE([CA Total], ALL(ventes_TRS_2026[Canal])))
+		formatString: 0.00\ %;-0.00\ %;0.00\ %
+		lineageTag: 35c9b60b-7b42-43f8-a521-58669f88754d
+
+	measure 'CA Accessoire' = CALCULATE([CA Total], ventes_TRS_2026[Catégorie] = "Accessoire")
+		formatString: #,0.###############\ "CFA";-#,0.###############\ "CFA";#,0.###############\ "CFA"
+		lineageTag: aa0e9524-6c00-43eb-afe7-c9f4ce3b4344
+
+		annotation PBI_FormatHint = {"currencyCulture":"fr-CI"}
+
+	measure 'CA Mobile' = CALCULATE([CA Total], ventes_TRS_2026[Catégorie] = "Mobile")
+		formatString: #,0.###############\ "CFA";-#,0.###############\ "CFA";#,0.###############\ "CFA"
+		lineageTag: 8b581370-8765-4bdc-9aba-321da0d30442
+
+		annotation PBI_FormatHint = {"currencyCulture":"fr-CI"}
+
+	measure 'CA Tech' = CALCULATE([CA Total], ventes_TRS_2026[Catégorie] = "Tech")
+		formatString: #,0.###############\ "CFA";-#,0.###############\ "CFA";#,0.###############\ "CFA"
+		lineageTag: e807f212-e3db-4471-9b00-6e57bd3452b3
+
+		annotation PBI_FormatHint = {"currencyCulture":"fr-CI"}
+
+	measure 'Part Chiffre D''affaire Produit' = DIVIDE([CA Total], CALCULATE([CA Total], ALL(ventes_TRS_2026[Produit])))
+		formatString: 0.00\ %;-0.00\ %;0.00\ %
+		lineageTag: 41f35115-3fea-4193-8980-960aefe0851b
+
+	column Mesure
+		lineageTag: ce1c3e49-c206-4fe3-b67a-2aa54896c919
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Mesure]
+
+		annotation SummarizationSetBy = Automatic
+
+	partition _Mesures = calculated
+		mode: import
+		source =
+				DATATABLE(
+				    "Mesure", STRING,
+				    {
+				        {"KPI"}
+				    }
+				)
+
+	annotation PBI_Id = 194b8eed38a64b9f9e0db17398357708
+

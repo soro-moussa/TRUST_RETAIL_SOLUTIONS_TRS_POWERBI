@@ -1,0 +1,12 @@
+# Fichiers temporaires Power BI
+**/.pbi/localSettings.json
+**/.pbi/cache.abf
+
+# Fichiers temporaires
+*.tmp
+*.log
+.DS_Store
+Thumbs.db
+
+# Fichiers personnels
+.env

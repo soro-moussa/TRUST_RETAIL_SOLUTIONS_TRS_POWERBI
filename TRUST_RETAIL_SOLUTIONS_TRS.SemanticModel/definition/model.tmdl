@@ -1,0 +1,23 @@
+model Model
+	culture: fr-FR
+	defaultPowerBIDataSourceVersion: powerBI_V3
+	sourceQueryCulture: fr-CI
+	valueFilterBehavior: independent
+	dataAccessOptions
+		legacyRedirects
+		returnErrorValuesAsNull
+
+annotation __PBI_TimeIntelligenceEnabled = 1
+
+annotation PBI_QueryOrder = ["ventes_TRS_2026"]
+
+annotation PBI_ProTooling = ["DevMode"]
+
+ref table ventes_TRS_2026
+ref table DateTableTemplate_28b02a6a-1055-4266-a8d1-ff7fefa9a5e4
+ref table _Mesures
+ref table Calendrier
+ref table LocalDateTable_90339777-8fbe-477b-bf9a-caca2f18f949
+
+ref cultureInfo fr-FR
+

@@ -1,0 +1,144 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/report/3.4.0/schema.json",
+  "themeCollection": {
+    "baseTheme": {
+      "name": "CY26SU07",
+      "reportVersionAtImport": {
+        "visual": "2.11.0",
+        "report": "3.4.0",
+        "page": "2.3.1"
+      },
+      "type": "SharedResources"
+    },
+    "customTheme": {
+      "name": "Th_me_TRS5504660140204084.json",
+      "reportVersionAtImport": {
+        "visual": "2.11.0",
+        "report": "3.4.0",
+        "page": "2.3.1"
+      },
+      "type": "RegisteredResources"
+    }
+  },
+  "objects": {
+    "section": [
+      {
+        "properties": {
+          "verticalAlignment": {
+            "expr": {
+              "Literal": {
+                "Value": "'Top'"
+              }
+            }
+          }
+        }
+      }
+    ],
+    "outspacePane": [
+      {
+        "properties": {
+          "expanded": {
+            "expr": {
+              "Literal": {
+                "Value": "false"
+              }
+            }
+          }
+        }
+      }
+    ]
+  },
+  "resourcePackages": [
+    {
+      "name": "SharedResources",
+      "type": "SharedResources",
+      "items": [
+        {
+          "name": "CY26SU07",
+          "path": "BaseThemes/CY26SU07.json",
+          "type": "BaseTheme"
+        }
+      ]
+    },
+    {
+      "name": "RegisteredResources",
+      "type": "RegisteredResources",
+      "items": [
+        {
+          "name": "accueil34765745560174277.svg",
+          "path": "accueil34765745560174277.svg",
+          "type": "Image"
+        },
+        {
+          "name": "ca8442998237557787.svg",
+          "path": "ca8442998237557787.svg",
+          "type": "Image"
+        },
+        {
+          "name": "clients4976055553033659.svg",
+          "path": "clients4976055553033659.svg",
+          "type": "Image"
+        },
+        {
+          "name": "Diapositive15782041319099077.JPG",
+          "path": "Diapositive15782041319099077.JPG",
+          "type": "Image"
+        },
+        {
+          "name": "Diapositive25006179166486697.JPG",
+          "path": "Diapositive25006179166486697.JPG",
+          "type": "Image"
+        },
+        {
+          "name": "fermer14490588756047573.svg",
+          "path": "fermer14490588756047573.svg",
+          "type": "Image"
+        },
+        {
+          "name": "info25746820507194046.svg",
+          "path": "info25746820507194046.svg",
+          "type": "Image"
+        },
+        {
+          "name": "info6890837946922094.svg",
+          "path": "info6890837946922094.svg",
+          "type": "Image"
+        },
+        {
+          "name": "insights06360008389825955.svg",
+          "path": "insights06360008389825955.svg",
+          "type": "Image"
+        },
+        {
+          "name": "panier_moyen27063322836840786.svg",
+          "path": "panier_moyen27063322836840786.svg",
+          "type": "Image"
+        },
+        {
+          "name": "Screenshot_2026-10-03-19-06-4442007660801470537.jpg",
+          "path": "Screenshot_2026-10-03-19-06-4442007660801470537.jpg",
+          "type": "Image"
+        },
+        {
+          "name": "Th_me_TRS5504660140204084.json",
+          "path": "Th_me_TRS5504660140204084.json",
+          "type": "CustomTheme"
+        },
+        {
+          "name": "transactions4324204155307704.svg",
+          "path": "transactions4324204155307704.svg",
+          "type": "Image"
+        }
+      ]
+    }
+  ],
+  "settings": {
+    "useStylableVisualContainerHeader": true,
+    "exportDataMode": "AllowSummarized",
+    "defaultDrillFilterOtherVisuals": true,
+    "allowChangeFilterTypes": true,
+    "useEnhancedTooltips": true,
+    "useDefaultAggregateDisplayName": true
+  },
+  "linguisticSchemaSyncVersion": 2
+}

@@ -1,0 +1,9 @@
+relationship 9339361e-48b4-41f2-b0ca-1f1c6ab5ef56
+	joinOnDateBehavior: datePartOnly
+	fromColumn: Calendrier.Date
+	toColumn: LocalDateTable_90339777-8fbe-477b-bf9a-caca2f18f949.Date
+
+relationship ca7b8544-705b-a2bf-5fa5-c98214ed0fa3
+	fromColumn: ventes_TRS_2026.Date
+	toColumn: Calendrier.Date
+

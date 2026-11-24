@@ -1,0 +1,70 @@
+table Calendrier
+	lineageTag: dd664db1-b5b8-48c0-bbd7-b2d13c66e9bb
+
+	column Date
+		formatString: General Date
+		lineageTag: e9eddb1c-c713-4454-b503-807add5125f4
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Date]
+
+		variation Variation
+			isDefault
+			relationship: 9339361e-48b4-41f2-b0ca-1f1c6ab5ef56
+			defaultHierarchy: LocalDateTable_90339777-8fbe-477b-bf9a-caca2f18f949.'Hiérarchie de dates'
+
+		annotation SummarizationSetBy = Automatic
+
+	column Année
+		formatString: 0
+		lineageTag: 2c73fb4a-2472-455b-a1fe-b54039b33af6
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: [Année]
+
+		annotation SummarizationSetBy = Automatic
+
+	column Mois
+		lineageTag: 708c8e5f-ba24-4c74-927e-49f89c5da48f
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Mois]
+
+		annotation SummarizationSetBy = Automatic
+
+	column NumMois
+		formatString: 0
+		lineageTag: a4577060-5361-4dce-9055-b3c3a76227dd
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: [NumMois]
+
+		annotation SummarizationSetBy = Automatic
+
+	column Trimestre
+		lineageTag: 4642d550-4ab4-4e85-b0ff-a38dce659ce7
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Trimestre]
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Calendrier = calculated
+		mode: import
+		source = ```
+				
+				ADDCOLUMNS(
+				    CALENDAR(
+				        MIN(ventes_TRS_2026[Date]),
+				        MAX(ventes_TRS_2026[Date])
+				    ),
+				    "Année", YEAR([Date]),
+				    "Mois", FORMAT([Date], "MMMM"),
+				    "NumMois", MONTH([Date]),
+				    "Trimestre", "T" & FORMAT([Date], "Q")
+				)
+				
+				```
+
+	annotation PBI_Id = 46be081fc8b64e47aa61997f3550b81e
+

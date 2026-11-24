@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "Report",
+    "displayName": "TRUST_RETAIL_SOLUTIONS_TRS"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "49e3a974-709a-4e0a-a028-5f6252e7ad65"
+  }
+}

@@ -1,0 +1,125 @@
+table ventes_TRS_2026
+	lineageTag: ac93444c-8558-4f62-affd-af4fcbce53b6
+
+	column Date
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 53652cd2-6f09-4f46-9d93-0cca8e352b8b
+		summarizeBy: none
+		sourceColumn: Date
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column Client
+		dataType: string
+		lineageTag: 74b0ad40-08e2-418e-b024-327496ba45a2
+		summarizeBy: none
+		sourceColumn: Client
+
+		annotation SummarizationSetBy = Automatic
+
+	column Pays
+		dataType: string
+		lineageTag: 321420de-56d1-427b-ad84-fdc5886cdccc
+		summarizeBy: none
+		sourceColumn: Pays
+
+		annotation SummarizationSetBy = Automatic
+
+	column Produit
+		dataType: string
+		lineageTag: 32b7eaf6-7d4d-489c-a4e9-19367019989c
+		summarizeBy: none
+		sourceColumn: Produit
+
+		annotation SummarizationSetBy = Automatic
+
+	column Catégorie
+		dataType: string
+		lineageTag: 695c6737-bbf1-4327-96be-6ff625ac09d2
+		summarizeBy: none
+		sourceColumn: Catégorie
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Montant en $'
+		dataType: decimal
+		formatString: #,0.###############\ "CFA";-#,0.###############\ "CFA";#,0.###############\ "CFA"
+		lineageTag: 4b9fd98e-005a-42f9-bccd-b00c5662ffc7
+		summarizeBy: sum
+		sourceColumn: Montant en $
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"currencyCulture":"fr-CI"}
+
+	column Statut
+		dataType: string
+		lineageTag: 431730ff-8996-4972-9691-bb8ecbbae21c
+		summarizeBy: none
+		sourceColumn: Statut
+
+		annotation SummarizationSetBy = Automatic
+
+	column Canal
+		dataType: string
+		lineageTag: 77698cb1-0e61-4df8-8aa4-c2487d70e3a5
+		summarizeBy: none
+		sourceColumn: Canal
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'ID Transaction'
+		dataType: string
+		lineageTag: 759dc746-3822-4bf0-9f5a-6b82331eb29c
+		summarizeBy: none
+		sourceColumn: ID Transaction
+
+		annotation SummarizationSetBy = Automatic
+
+	partition ventes_TRS_2026 = m
+		mode: import
+		source =
+				let
+				    Source = Excel.Workbook(File.Contents("S:\CERTI\POWER BI\TRUST_RETAIL_SOLUTIONS_TRS_POWERBI\Data\Donnée_TRS_Brutes.xlsx")),
+				    #"ventes-TRS-2026_sheet" = Source{[Item="ventes-TRS-2026",Kind="Sheet"]}[Data],
+				    FilterNullAndWhitespace = each List.Select(_, each _ <> null and (not (_ is text) or Text.Trim(_) <> "")),
+				    #"Premières lignes supprimées" = Table.Skip(#"ventes-TRS-2026_sheet", each try List.IsEmpty(List.Skip(FilterNullAndWhitespace(Record.FieldValues(_)), 1)) otherwise false),
+				    #"Lignes vides supprimées" = Table.SelectRows(#"Premières lignes supprimées", each not List.IsEmpty(FilterNullAndWhitespace(Record.FieldValues(_)))),
+				    #"Type modifié" = Table.TransformColumnTypes(#"Lignes vides supprimées",{{"Column1", type text}, {"Column2", type text}, {"Column3", type text}, {"Column4", type text}, {"Column5", type text}, {"Column6", type text}, {"Column7", type text}, {"Column8", type text}, {"Column9", type text}, {"Column10", type text}}),
+				    #"En-têtes promus : Première ligne comme en-tete" = Table.PromoteHeaders(#"Type modifié", [PromoteAllScalars=true]),
+				    #"Type modifié1" = Table.TransformColumnTypes(#"En-têtes promus : Première ligne comme en-tete",{{"Date", type text}, {"Client", type text}, {"Pays", type text}, {"Produit", type text}, {"Catégorie", type text}, {"Montant", type text}, {"Statut", type text}, {"Canal", type text}, {"Notes", type text}, {"ID Transaction", type text}}),
+				    #"Valeur ERREUR remplacée par null dans Date" = Table.ReplaceValue(#"Type modifié1","ERREUR",null,Replacer.ReplaceValue,{"Date"}),
+				    #"Rempli vers le bas : date" = Table.FillDown(#"Valeur ERREUR remplacée par null dans Date",{"Date"}),
+				    #"Type modifié2" = Table.TransformColumnTypes(#"Rempli vers le bas : date",{{"Date", type date}}),
+				    #"Valeur null remplacée par pays non renseigné dans pays" = Table.ReplaceValue(#"Type modifié2",null,"Pays non renseigné",Replacer.ReplaceValue,{"Pays"}),
+				    #"filtré montant par NA, error et -" = Table.SelectRows(#"Valeur null remplacée par pays non renseigné dans pays", each ([Montant] <> "-" and [Montant] <> "error" and [Montant] <> "N/A")),
+				    #"Fractionner la colonne montant par €" = Table.SplitColumn(#"filtré montant par NA, error et -", "Montant", Splitter.SplitTextByDelimiter("€", QuoteStyle.Csv), {"Montant.1", "Montant.2"}),
+				    #"Type modifié3" = Table.TransformColumnTypes(#"Fractionner la colonne montant par €",{{"Montant.1", type text}, {"Montant.2", type text}}),
+				    #"Colonnes renommées" = Table.RenameColumns(#"Type modifié3",{{"Montant.1", "Montant en $"}, {"Montant.2", "Devise"}}),
+				    #"Valeur vide remplacée par € dans devise" = Table.ReplaceValue(#"Colonnes renommées","","€",Replacer.ReplaceValue,{"Devise"}),
+				    #"Valeur null remplacée par $ dans devise" = Table.ReplaceValue(#"Valeur vide remplacée par € dans devise",null,"$",Replacer.ReplaceValue,{"Devise"}),
+				    #"Valeur $ remplacée par vide dans montant" = Table.ReplaceValue(#"Valeur null remplacée par $ dans devise","$","",Replacer.ReplaceText,{"Montant en $"}),
+				    #"Colonnes renommées1" = Table.RenameColumns(#"Valeur $ remplacée par vide dans montant",{{"Montant en $", "Montant"}}),
+				    #"Valeur , remplacée par vide dans montant" = Table.ReplaceValue(#"Colonnes renommées1",",","",Replacer.ReplaceText,{"Montant"}),
+				    #"Type modifié4" = Table.TransformColumnTypes(#"Valeur , remplacée par vide dans montant",{{"Montant", Currency.Type}}),
+				    #"Colonne Montant en $ ajoutée" = Table.AddColumn(#"Type modifié4", "Montant en $", each if [Devise] = "€" then [Montant] / 0.86 else [Montant]),
+				    #"Colonnes permutées" = Table.ReorderColumns(#"Colonne Montant en $ ajoutée",{"Date", "Client", "Pays", "Produit", "Catégorie", "Montant", "Montant en $", "Devise", "Statut", "Canal", "Notes", "ID Transaction"}),
+				    #"Ligne statut filtrée : NA et annulé" = Table.SelectRows(#"Colonnes permutées", each ([Statut] <> "Annulé" and [Statut] <> "N/A")),
+				    #"Valeur payé remplacée par Payé dans statut" = Table.ReplaceValue(#"Ligne statut filtrée : NA et annulé","payé","Payé",Replacer.ReplaceText,{"Statut"}),
+				    #"Valeur null remplacée par canal non renseigné" = Table.ReplaceValue(#"Valeur payé remplacée par Payé dans statut",null,"Canal non renseigné",Replacer.ReplaceValue,{"Canal"}),
+				    #"Colonne note supprimée" = Table.RemoveColumns(#"Valeur null remplacée par canal non renseigné",{"Notes"}),
+				    #"Doublons dans ID Transaction supprimés" = Table.Distinct(#"Colonne note supprimée", {"ID Transaction"}),
+				    #"Type de montant en $ modifié" = Table.TransformColumnTypes(#"Doublons dans ID Transaction supprimés",{{"Montant en $", Currency.Type}}),
+				    #"Colonnes supprimées : montant et devise" = Table.RemoveColumns(#"Type de montant en $ modifié",{"Montant", "Devise"}),
+				    #"Valeur paul k remplacée par Paul K." = Table.ReplaceValue(#"Colonnes supprimées : montant et devise","paul k","Paul K.",Replacer.ReplaceText,{"Client"}),
+				    #"Valeur Paul K. remplacée par Paul K." = Table.ReplaceValue(#"Valeur paul k remplacée par Paul K."," Paul K.","Paul K.",Replacer.ReplaceText,{"Client"})
+				in
+				    #"Valeur Paul K. remplacée par Paul K."
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+
