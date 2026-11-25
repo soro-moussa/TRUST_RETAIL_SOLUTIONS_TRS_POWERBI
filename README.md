@@ -1,5 +1,10 @@
 # 📊 TRS - DATA ANALYSIS - POWER BI
 
+![Power BI](https://img.shields.io/badge/Power%20BI-Analytics-yellow)
+![DAX](https://img.shields.io/badge/DAX-Measures-blue)
+![Power Query](https://img.shields.io/badge/Power%20Query-ETL-green)
+![GitHub](https://img.shields.io/badge/GitHub-Version%20Control-black)
+
 # 1. Contexte de l’entreprise
 
 Vous travaillez en tant que Data Analyst au sein de l’entreprise : 👉 TRUST RETAIL SOLUTIONS (TRS).
@@ -102,10 +107,41 @@ Un rapport structuré permettant à la direction de :
 
 [Consulter le dashboard en ligne](https://app.powerbi.com/view?r=eyJrIjoiZDE5Y2ZjNDYtODI1NC00NjU2LTk0NzktYTE4YmQ1OGJmNzI4IiwidCI6IjFlODMyYTBmLTdiNWQtNGRmMC1hMjg5LWMyM2Y4YzU4MmIwYSJ9)
 
-## 10. Auteur
+## 10. Indicateurs clés de performance (KPI)
+
+|KPI | Description | Objectif |
+|---|---|---|
+|Chiffre d'Affaires Total | Montant total des ventes réalisées | Mesurer la performance commerciale et suivre l'évolution des revenus |
+|Nombre de Transactions | Nombre total de transactions ou de ventes effectuées | Évaluer le volume des ventes et mesurer l'activité commerciale |
+|Nombre de Clients	| Nombre total de clients ayant effectué au moins un achat | Mesurer la capacité de l'entreprise à attirer et fidéliser ses clients |
+|Panier Moyen | Montant moyen dépensé par transaction | Évaluer le montant moyen dépensé par client lors d'un achat et identifier les opportunités d'augmentation des ventes |
+
+## 11. Résultats
+
+# A retenir :
+
+- Le chiffre d'affaires total atteint  512.430$.
+
+- les Techs sont la catégorie la plus rentable (45,80% des ventes).
+
+- le Cameroun est le marché principale (28% du chiffre d'affaires).
+
+- Le canal Magasin génère le plus de revenue (29,43%), suivi des Partenaires.
+
+# Insights Clé : 
+
+- Le Cameroun est le marché le plus rentable.
+
+- les catégories Techs et les Mobiles représentent 74,58% du Chiffre d'Affaires.
+
+- Le canal Magasin est le plus performant (29,43%).
+
+- Le top 3 des produits génère 77,06% du Chiffre d'Affaires.
+
+## 12. Auteur
 
 Data Analyst
 
-## 11. Licence
+## 13. Licence
 
 Projet réalisé à des fins pédagogiques et de portfolio.
